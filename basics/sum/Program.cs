@@ -10,14 +10,16 @@ namespace sum
     {
         static void Main(string[] args)
         {
-            int a, b, result; // Variables declaration
-            Console.WriteLine("First number: "); // Print message
-            a = int.Parse(Console.ReadLine()); // Read a number from console and convert to int
-            Console.WriteLine("Second number: "); // Print message 
-            b = int.Parse(Console.ReadLine()); // Read a number from console and convert to int
-            result = a + b; // Sum a and b and store in result
-            Console.WriteLine("Result: " + result); // Print result
-            Console.ReadKey(); // Wait for a key press
+            /* Sum os all the numbers in a range */
+            int sum = 0;
+            int start = 1;
+            int end = 5;
+            for (int i = start; i <= end; i++)
+            {
+                sum += i;
+            }
+            Console.WriteLine("Sum of all the numbers from {0} to {1} is {2}", start, end, sum);
+            Console.ReadLine();
         }
     }
 }
