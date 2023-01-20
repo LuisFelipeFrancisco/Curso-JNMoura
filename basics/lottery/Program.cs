@@ -13,29 +13,31 @@ namespace lottery
     {
         static void Main(string[] args)
         {
-            double player1, player2, player3, prize, total, share1, share2, share3;
+            double player1, player2, player3, totalInvestment, prizePool, player1Prize, player2Prize, player3Prize;
 
-            Console.WriteLine("Enter the value invested by player 1: ");
+            Console.WriteLine("Enter the value invested by the first player: ");
             player1 = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter the value invested by player 2: ");
+            Console.WriteLine("Enter the value invested by the second player: ");
             player2 = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter the value invested by player 3: ");
+            Console.WriteLine("Enter the value invested by the third player: ");
             player3 = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("Enter the value of the prize: ");
-            prize = double.Parse(Console.ReadLine());
+            Console.WriteLine("Enter the prize pool: ");
+            prizePool = double.Parse(Console.ReadLine());
 
-            total = player1 + player2 + player3;
-            share1 = (player1 / total) * prize;
-            share2 = (player2 / total) * prize;
-            share3 = (player3 / total) * prize;
+            totalInvestment = player1 + player2 + player3;
 
-            Console.WriteLine($"Player 1 will win {share1}");
-            Console.WriteLine($"Player 2 will win {share2}");
-            Console.WriteLine($"Player 3 will win {share3}");
+            player1Prize = (player1 / totalInvestment) * prizePool;
+            player2Prize = (player2 / totalInvestment) * prizePool;
+            player3Prize = (player3 / totalInvestment) * prizePool;
 
+            Console.WriteLine($"The second player will win {player1Prize:0.00}");
+            Console.WriteLine($"The second player will win {player2Prize:0.00}");
+            Console.WriteLine($"The third player will win {player3Prize:0.00}");
+
+            Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
     }
