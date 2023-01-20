@@ -25,3 +25,7 @@ The Parse() method is used to convert a string to a value. It returns a value.
 # .ReadKey() method
 
 The ReadKey() method is used to read a key from the console. It returns a ConsoleKeyInfo object.
+
+# .Convert.ToInt32() method
+
+The Convert.ToInt32() method is used to convert a string to an integer. It returns an integer value.
