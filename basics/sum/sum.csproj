@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{240F0A5E-46B5-4EF7-ACAD-ADAC9F3D6AA7}</ProjectGuid>
+    <ProjectGuid>{956ED190-D65A-4B1C-907C-E17FB8787240}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>somar</RootNamespace>
-    <AssemblyName>somar</AssemblyName>
+    <RootNamespace>sum</RootNamespace>
+    <AssemblyName>sum</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
