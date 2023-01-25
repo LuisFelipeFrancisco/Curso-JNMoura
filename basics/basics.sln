@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "calculator", "calculator\ca
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lottery", "lottery\lottery.csproj", "{B7347FBD-F68F-4BE6-94AB-BACA18E0D676}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lottery2", "lottery2\lottery2.csproj", "{D5618B43-B421-4B1C-A7E4-32C9285B55B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B7347FBD-F68F-4BE6-94AB-BACA18E0D676}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7347FBD-F68F-4BE6-94AB-BACA18E0D676}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7347FBD-F68F-4BE6-94AB-BACA18E0D676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5618B43-B421-4B1C-A7E4-32C9285B55B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5618B43-B421-4B1C-A7E4-32C9285B55B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5618B43-B421-4B1C-A7E4-32C9285B55B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5618B43-B421-4B1C-A7E4-32C9285B55B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
