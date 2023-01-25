@@ -29,18 +29,18 @@ namespace lottery
 
             totalInvestment = player1 + player2 + player3;
 
-            player1Prize = (player1 / totalInvestment) * prizePool;
-            player2Prize = (player2 / totalInvestment) * prizePool;
-            player3Prize = (player3 / totalInvestment) * prizePool;
+            player1Prize = player1 / totalInvestment * prizePool;
+            player2Prize = player2 / totalInvestment * prizePool;
+            player3Prize = player3 / totalInvestment * prizePool;
 
-            Console.WriteLine($"The second player will win {player1Prize:F2}");
+            Console.WriteLine($"The first player will win R$ {player1Prize:F2}");
             Console.WriteLine($"The second player will win {player2Prize:C}");
-            Console.WriteLine($"The third player will win {player3Prize:0.00}");
+            Console.WriteLine($"The third player will win R$ {player3Prize:0.00}");
 
             // Changing the locale to en-US
-            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            //System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             // Printing the values again with the new locale
-            Console.WriteLine($"The second player will win {player2Prize:C}");
+            //Console.WriteLine($"The second player will win {player2Prize:C}");
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
@@ -49,8 +49,8 @@ namespace lottery
 }
 
 /*
-* F2 is a format specifier that indicates that the value should be formatted as a number with two decimal places.
-* C is a format specifier that indicates that the value should be formatted as a currency value.
+* F is a format specifier that indicates that the value should be formatted as a number with a fixed-point representation.
+* C is a format specifier that indicates that the value should be formatted as a currency value based on the current culture.
 * 0.00 is a format specifier that indicates that the value should be formatted as a number with two decimal places.
 * CurrentCulture is a property that gets or sets the CultureInfo that represents the culture used by the current thread.
 */
