@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "password", "password\passwo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fisherman", "fisherman\fisherman.csproj", "{29034B4B-046A-4DFE-84C5-2C33ED1CFC91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "election", "election\election.csproj", "{C96BD88C-DB4D-401D-BEE1-02BFE5B67CD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "school", "school\school.csproj", "{D61F33F6-4744-4E1C-9DCA-9F06685B0696}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{29034B4B-046A-4DFE-84C5-2C33ED1CFC91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29034B4B-046A-4DFE-84C5-2C33ED1CFC91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29034B4B-046A-4DFE-84C5-2C33ED1CFC91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C96BD88C-DB4D-401D-BEE1-02BFE5B67CD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C96BD88C-DB4D-401D-BEE1-02BFE5B67CD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C96BD88C-DB4D-401D-BEE1-02BFE5B67CD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C96BD88C-DB4D-401D-BEE1-02BFE5B67CD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D61F33F6-4744-4E1C-9DCA-9F06685B0696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D61F33F6-4744-4E1C-9DCA-9F06685B0696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D61F33F6-4744-4E1C-9DCA-9F06685B0696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D61F33F6-4744-4E1C-9DCA-9F06685B0696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
