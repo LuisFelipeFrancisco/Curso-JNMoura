@@ -15,7 +15,7 @@ namespace multiplicationTable
 
             /* for loop */
             Console.WriteLine("For loop:");
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i < 11; i++)
             {
                 Console.WriteLine($"{number} x {i:00} = {number * i:00}");
             }
@@ -23,20 +23,20 @@ namespace multiplicationTable
             /* while loop */
             Console.WriteLine("While loop:");
             var j = 0;
-            while (j <= 10)
+            while (j < 11)
             {
                 Console.WriteLine($"{number} x {j:00} = {number * j:00}");
                 j++;
             }
 
-            /* do while loop */
+            /* do while loop */ 
             Console.WriteLine("Do while loop:");
             var k = 0;
             do
             {
                 Console.WriteLine($"{number} x {k:00} = {number * k:00}");
                 k++;
-            } while (k <= 10);
+            } while (k < 11);
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
