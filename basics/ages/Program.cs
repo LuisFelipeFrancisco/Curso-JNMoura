@@ -32,9 +32,9 @@ namespace ages
                 age = int.Parse(Console.ReadLine());
             }
             average = (double)sum / count;
-            Console.WriteLine("Total of people under 21 years old: " + under21);
-            Console.WriteLine("Total of people over 50 years old: " + over50);
-            Console.WriteLine("The average of the ages is: " + average);
+            Console.WriteLine($"Total of people under 21 years old: {under21}");
+            Console.WriteLine($"Total of people over 50 years old: {over50}");
+            Console.WriteLine($"The average of the ages is: {average}");
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }

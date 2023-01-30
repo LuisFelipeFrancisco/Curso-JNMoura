@@ -46,8 +46,8 @@ namespace greaterAndSum
                 greater = num5;
             }
 
-            Console.WriteLine("The greater number is: " + greater);
-            Console.WriteLine("The sum of the numbers is: " + sum);
+            Console.WriteLine($"The greater number is: {greater}");
+            Console.WriteLine($"The sum of the numbers is: {sum}");
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
