@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loop", "loop\loop.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "multiplicationTable", "multiplicationTable\multiplicationTable.csproj", "{E46EFDCB-ABE6-4666-86F6-3578EC4139ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "greaterAndSum", "greaterAndSum\greaterAndSum.csproj", "{B8DC8923-B83F-443C-8A20-9F0583B8FB2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ages", "ages\ages.csproj", "{681AA972-B441-486D-9898-6F0AA302381D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,14 @@ Global
 		{E46EFDCB-ABE6-4666-86F6-3578EC4139ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E46EFDCB-ABE6-4666-86F6-3578EC4139ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E46EFDCB-ABE6-4666-86F6-3578EC4139ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8DC8923-B83F-443C-8A20-9F0583B8FB2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8DC8923-B83F-443C-8A20-9F0583B8FB2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8DC8923-B83F-443C-8A20-9F0583B8FB2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8DC8923-B83F-443C-8A20-9F0583B8FB2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{681AA972-B441-486D-9898-6F0AA302381D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{681AA972-B441-486D-9898-6F0AA302381D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{681AA972-B441-486D-9898-6F0AA302381D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{681AA972-B441-486D-9898-6F0AA302381D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
