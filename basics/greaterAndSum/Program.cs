@@ -10,44 +10,28 @@ namespace greaterAndSum
     {
         static void Main(string[] args)
         {
-            int num1, num2, num3, num4, num5, sum, greater;
-            Console.WriteLine("Enter the first number: ");
-            num1 = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the second number: ");
-            num2 = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the third number: ");
-            num3 = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the fourth number: ");
-            num4 = int.Parse(Console.ReadLine());
-
-            Console.WriteLine("Enter the fifth number: ");
-            num5 = int.Parse(Console.ReadLine());
-
-            sum = num1 + num2 + num3 + num4 + num5;
-            greater = num1;
-
-            if (num2 > greater)
+            int greater = 0, sum = 0;
+            for (int i = 1; i < 6; i++)
             {
-                greater = num2;
-            }
-            if (num3 > greater)
-            {
-                greater = num3;
-            }
-            if (num4 > greater)
-            {
-                greater = num4;
-            }
-            if (num5 > greater)
-            {
-                greater = num5;
+                Console.WriteLine($"Enter the {i}º integer number:");
+                int number = int.Parse(Console.ReadLine());
+                if (i == 1)
+                {
+                    greater = number;
+                    sum = number;
+                }
+                else
+                {
+                    if (number > greater)
+                    {
+                        greater = number;
+                    }
+                    sum += number;
+                }
             }
 
-            Console.WriteLine($"The greater number is: {greater}");
-            Console.WriteLine($"The sum of the numbers is: {sum}");
+            Console.WriteLine($"The greater number is {greater}");
+            Console.WriteLine($"The sum of the numbers is {sum}");
 
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
