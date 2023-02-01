@@ -24,10 +24,13 @@ namespace gasStation
         static void Main(string[] args)
         {
             double liters, price, discount, total;
+
             Console.WriteLine("Enter the number of liters: ");
             liters = double.Parse(Console.ReadLine());
+
             Console.WriteLine("Enter the type of fuel (1 - Alcohol, 2 - Gasoline): ");
             int type = int.Parse(Console.ReadLine());
+
             if (type == 1)
             {
                 price = 3.50;
@@ -54,6 +57,7 @@ namespace gasStation
             }
             total = liters * price * (1 - discount);
             Console.WriteLine($"The total to pay is: {total:C}");
+            
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }

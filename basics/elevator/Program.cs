@@ -18,8 +18,10 @@ namespace elevator
             int people;
             Console.WriteLine("Enter the maximum weight supported by the elevator: ");
             maxWeight = double.Parse(Console.ReadLine());
+
             Console.WriteLine("Enter the number of people who want to use the elevator: ");
             people = int.Parse(Console.ReadLine());
+
             for (int i = 1; i <= people; i++)
             {
                 Console.WriteLine($"Enter the weight of the {i}º person: ");
@@ -27,12 +29,13 @@ namespace elevator
             }
             if (totalWeight <= maxWeight)
             {
-                Console.WriteLine("The elevator can enter into operation");
+                Console.WriteLine("The elevator can operate");
             }
             else
             {
-                Console.WriteLine("The elevator cannot enter into operation");
+                Console.WriteLine("The elevator cannot operate");
             }
+            
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }

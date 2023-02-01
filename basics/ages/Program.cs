@@ -14,8 +14,10 @@ namespace ages
         {
             int age, under21 = 0, over50 = 0, sum = 0, count = 0;
             double average;
+
             Console.WriteLine("Enter the age: ");
             age = int.Parse(Console.ReadLine());
+            
             while (age != -1)
             {
                 if (age < 21)
@@ -32,9 +34,11 @@ namespace ages
                 age = int.Parse(Console.ReadLine());
             }
             average = (double)sum / count;
+            
             Console.WriteLine($"Total of people under 21 years old: {under21}");
             Console.WriteLine($"Total of people over 50 years old: {over50}");
             Console.WriteLine($"The average of the ages is: {average}");
+            
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
