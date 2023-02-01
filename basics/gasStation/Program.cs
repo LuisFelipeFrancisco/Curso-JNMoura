@@ -15,6 +15,7 @@
  * seguinte forma: 1-álcool, 2-gasolina), calcule e imprima o valor
  * a ser pago pelo jogador, sabendo-se que o preço do litro da gasolina é R$ 5.00 e o preço do litro do álcool é R$
  * 3.50
+ * @ Não aceitar valores negativos para o número de litros nem opções inválidas para o tipo de combustível
 */
 
 namespace gasStation
@@ -23,41 +24,37 @@ namespace gasStation
     {
         static void Main(string[] args)
         {
+            int typeOfFuel;
+            bool conversion = false; 
             double liters, price, discount, total;
 
-            Console.WriteLine("Enter the number of liters: ");
-            liters = double.Parse(Console.ReadLine());
+            do {
+                Console.WriteLine("Enter the type of fuel (1 - alcohol, 2 - gasoline):");
+                conversion = int.TryParse(Console.ReadLine(), out typeOfFuel); // Tenta converter o valor digitado para inteiro caso seja possível a conversão, a variável conversion recebe true, caso contrário, recebe false 
+            } while (!conversion || (typeOfFuel != 1 && typeOfFuel != 2)); // enquanto a conversão não for bem sucedida ou o tipo de combustível não for 1 ou 2
 
-            Console.WriteLine("Enter the type of fuel (1 - Alcohol, 2 - Gasoline): ");
-            int type = int.Parse(Console.ReadLine());
+            do {
+                Console.WriteLine("Enter the number of liters:");
+                conversion = double.TryParse(Console.ReadLine(), out liters); // testa se a conversão foi bem sucedida
+            } while (!conversion || liters < 0); // enquanto a conversão não for bem sucedida ou o número de litros for negativo
 
-            if (type == 1)
-            {
+            if (typeOfFuel == 1) {
                 price = 3.50;
-                if (liters <= 20)
-                {
+                if (liters <= 20) {
                     discount = 0.02;
-                }
-                else
-                {
+                } else {
                     discount = 0.05;
                 }
-            }
-            else
-            {
+            } else {
                 price = 5.00;
-                if (liters <= 20)
-                {
+                if (liters <= 20) {
                     discount = 0.03;
-                }
-                else
-                {
+                } else {
                     discount = 0.06;
                 }
             }
             total = liters * price * (1 - discount);
-            Console.WriteLine($"The total to pay is: {total:C}");
-            
+            Console.WriteLine($"The total amount to be paid is {total:C}");
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
