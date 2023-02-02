@@ -24,9 +24,15 @@ namespace gasStation
     {
         static void Main(string[] args)
         {
+            const double ALCOHOL_PRICE = 3.50;
+            const double GASOLINE_PRICE = 5.00;
+            const double DISCOUNT_ALCOHOL_20 = 0.02;
+            const double DISCOUNT_ALCOHOL_20_PLUS = 0.05;
+            const double DISCOUNT_GASOLINE_20 = 0.03;
+            const double DISCOUNT_GASOLINE_20_PLUS = 0.06;
             int typeOfFuel;
             bool conversion = false; 
-            double liters, price, discount, total;
+            double liters, priceOfFuel, discount, total;
 
             do {
                 Console.WriteLine("Enter the type of fuel (1 - alcohol, 2 - gasoline):");
@@ -38,22 +44,10 @@ namespace gasStation
                 conversion = double.TryParse(Console.ReadLine(), out liters); // testa se a conversão foi bem sucedida
             } while (!conversion || liters < 0); // enquanto a conversão não for bem sucedida ou o número de litros for negativo
 
-            if (typeOfFuel == 1) {
-                price = 3.50;
-                if (liters <= 20) {
-                    discount = 0.02;
-                } else {
-                    discount = 0.05;
-                }
-            } else {
-                price = 5.00;
-                if (liters <= 20) {
-                    discount = 0.03;
-                } else {
-                    discount = 0.06;
-                }
-            }
-            total = liters * price * (1 - discount);
+            priceOfFuel = typeOfFuel == 1 ? ALCOHOL_PRICE : GASOLINE_PRICE; // se o tipo de combustível for 1, o preço do combustível é o preço do álcool, caso contrário, é o preço da gasolina
+            discount = liters <= 20 ? (typeOfFuel == 1 ? DISCOUNT_ALCOHOL_20 : DISCOUNT_GASOLINE_20) : (typeOfFuel == 1 ? DISCOUNT_ALCOHOL_20_PLUS : DISCOUNT_GASOLINE_20_PLUS); // se o número de litros for menor ou igual a 20, o desconto é o desconto de 2% ou 3% de acordo com o tipo de combustível, caso contrário, é o desconto de 5% ou 6% de acordo com o tipo de combustível
+            total = liters * priceOfFuel * (1 - discount); // calcula o total a ser pago
+
             Console.WriteLine($"The total amount to be paid is {total:C}");
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
