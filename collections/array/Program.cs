@@ -5,6 +5,7 @@
 * na terceira posição, o dobro do valor da segunda posição, 40, e assim por diante. Ao final,
 * mostre o valor armazenado na 8ª posição e a soma de todos os valores armazenados no vetor.
 */
+
 namespace array
 {
     internal class Program
