@@ -51,8 +51,7 @@ namespace race
 
             Console.WriteLine($"Melhor tempo: {melhorTempo}");
             Console.WriteLine($"Volta em que o melhor tempo ocorreu: {voltaMelhorTempo}");
-            Console.WriteLine($"Tempo médio das {tempos.Count} voltas: {tempoMedio / tempos.Count}");
-
+            Console.WriteLine($"Tempo médio das {tempos.Count} voltas: {tempoMedio / (tempos.Count == 0 ? 1 : tempos.Count)}");
             Console.WriteLine("Pressione qualquer tecla para sair...");
             Console.ReadKey();
         }
