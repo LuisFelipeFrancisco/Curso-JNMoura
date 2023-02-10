@@ -41,7 +41,6 @@ namespace inverse
             foreach (int numero in pilha)
             {
                 Console.WriteLine(numero);
-
             }
 
             Console.WriteLine("Pressione qualquer tecla para sair...");
