@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace tryCatch
@@ -33,11 +29,12 @@ namespace tryCatch
                 {
                     Console.WriteLine("Desculpe, ocorreu um erro que não esperávamos. Entre em contato com o suporte, ou tente novamente.");
 
-                    /*StreamWriter sw = new StreamWriter("log.txt", true);
+                    /*
+                    StreamWriter sw = new StreamWriter("log.txt", true);
                     sw.WriteLine($"\n------\nData:{DateTime.Now} \n Mensagem:{ex.Message} \n StackTrace:{ex.StackTrace} \n InnerException:{ex.InnerException} \n Tipo do erro: {ex.GetType()} \n Source: {ex.Source} \n TargetSite: {ex.TargetSite}");
                     sw.Close();
-                    sw.Dispose();*/
-
+                    sw.Dispose();
+                    */
                     using (StreamWriter sw = new StreamWriter("log.txt", true))
                     {
                         sw.WriteLine($"\n------\nData:{DateTime.Now} \n Mensagem:{ex.Message} \n StackTrace:{ex.StackTrace} \n InnerException:{ex.InnerException} \n Tipo do erro: {ex.GetType()} \n Source: {ex.Source} \n TargetSite: {ex.TargetSite}");
@@ -45,10 +42,12 @@ namespace tryCatch
 
                     numero1 = -1;
                 }
-                /*finally
+                /*
+                finally
                 {
                     Console.WriteLine("finally");
-                }*/
+                }
+                */
             } while (numero1 < 0); // não podemos ter números negativos.
 
 
