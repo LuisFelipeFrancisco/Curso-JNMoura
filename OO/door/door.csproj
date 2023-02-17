@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EFC60667-FC16-40AE-A96A-605FF3DC6EB7}</ProjectGuid>
+    <ProjectGuid>{4E32A183-4206-40F2-A4A1-675CDCEBA412}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>car</RootNamespace>
-    <AssemblyName>car</AssemblyName>
+    <RootNamespace>door</RootNamespace>
+    <AssemblyName>door</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Car.cs" />
+    <Compile Include="Door.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
