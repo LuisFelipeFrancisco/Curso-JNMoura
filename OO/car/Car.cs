@@ -4,37 +4,56 @@ namespace car
 {
     internal class Car
     {
-        private int DoorsQuantity { get; set; }
-        private string Model { get; set; }
-        private string Manufacturer { get; set; }
-        private int Year { get; set; }
-        private string Color { get; set; }
-        private int Speed { get; set; }
+        private int DoorsQuantity;
+        public string Model;
+        public string Manufacturer;
+        public int Year;
+        public string Color;
+        private int Speed;
 
-        public Car(int doorsQuantity, string model, string manufacturer, int year, string color, int speed)
+        public Car()
         {
-            DoorsQuantity = doorsQuantity;
-            Model = model;
-            Manufacturer = manufacturer;
-            Year = year;
-            Color = color;
-            Speed = speed;
+            this.DoorsQuantity = 0;
+            this.Model = null;
+            this.Manufacturer = null;
+            this.Year = 0;
+            this.Color = null;
+            this.Speed = 0;
+        }
+
+        public Car(int doorsQuantity, string model, string manufacturer, int year, string color)
+        {
+            this.DoorsQuantity = doorsQuantity;
+            this.Model = model;
+            this.Manufacturer = manufacturer;
+            this.Year = year;
+            this.Color = color;
+            this.Speed = 0;
+        }
+
+        public void setDoorsQuantity(int doorsQuantity)
+        {
+            this.DoorsQuantity = doorsQuantity;
+        }
+
+        public int getDoorsQuantity()
+        {
+            return this.DoorsQuantity;
+        }
+
+        public int getSpeed()
+        {
+            return this.Speed;
         }
 
         public void Accelerate()
         {
-            Console.WriteLine($"The {Color} {Model} from {Manufacturer} is accelerating... Vrum vrum!");
-            Speed += 10;
+            this.Speed++;
         }
 
-        public void Brake()
+        public void Accelerate(int turbo)
         {
-            Speed -= 10;
-        }
-
-        public void ShowInfo()
-        {
-            Console.WriteLine($"The {Color} {Model} from {Manufacturer} has {DoorsQuantity} doors and is going {Speed} km/h.");
+            this.Speed += turbo;
         }
     }
 }

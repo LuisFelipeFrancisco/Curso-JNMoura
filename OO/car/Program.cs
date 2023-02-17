@@ -6,26 +6,27 @@ namespace car
     {
         static void Main(string[] args)
         {
-            Car civic = new Car(4, "Civic", "Honda", 2019, "Black", 0);
-            Car celta = new Car(4, "Celta", "Chevrolet", 2018, "White", 0);
-            Car fusca = new Car(2, "Fusca", "Volkswagen", 1970, "Yellow", 0);
-
-            civic.ShowInfo();
-            celta.ShowInfo();
-            fusca.ShowInfo();
+            Car civic = new Car(4, "Civic", "Honda", 2019, "Black");
+            Car celta = new Car(4, "Celta", "Chevrolet", 2018, "White");
+            Car fusca = new Car(2, "Fusca", "Volkswagen", 1970, "Yellow");
 
             civic.Accelerate();
             civic.Accelerate();
+            civic.Accelerate();
+            civic.Accelerate();
 
-            celta.Accelerate();
-            celta.Accelerate();
-            celta.Accelerate();
+            for (int i = 0; i < 1000; i++)
+            {
+                civic.Accelerate();
+            }
 
-            fusca.Accelerate();
+            Console.WriteLine($"Civic speed: {civic.getSpeed()}");
 
-            civic.ShowInfo();
-            celta.ShowInfo();
-            fusca.ShowInfo();
+            celta.Accelerate(5);
+
+            Console.WriteLine($"Celta speed: {celta.getSpeed()}");
+
+            Console.WriteLine($"Fusca speed: {fusca.getSpeed()}");
 
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
