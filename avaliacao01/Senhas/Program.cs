@@ -36,8 +36,7 @@ namespace Senhas
             Queue<int> filaComum = new Queue<int>();
             Queue<int> filaPrioritaria = new Queue<int>();
 
-            while (opcao != 4)
-            {
+            do {
                 Console.WriteLine("Escolha uma opção:");
                 Console.WriteLine("1 - Gerar senha para atendimento comum");
                 Console.WriteLine("2 - Gerar senha para atendimento prioritário");
@@ -46,7 +45,7 @@ namespace Senhas
                 Console.WriteLine("5 - Visualizar fila de chamada");
                 Console.WriteLine("");
 
-                opcao = int.Parse(Console.ReadLine());
+                opcao = int.TryParse(Console.ReadLine(), out opcao) ? opcao : 0;
 
                 switch (opcao)
                 {
@@ -54,25 +53,25 @@ namespace Senhas
                         ultimaSenhaGerada++;
                         filaComum.Enqueue(ultimaSenhaGerada);
                         Console.WriteLine("Senha gerada com sucesso!");
-                        Console.WriteLine("Senha gerada: {0}", ultimaSenhaGerada);
+                        Console.WriteLine($"Senha gerada: {ultimaSenhaGerada}");
                         Console.WriteLine("");
                         break;
                     case 2:
                         ultimaSenhaGerada++;
                         filaPrioritaria.Enqueue(ultimaSenhaGerada);
                         Console.WriteLine("Senha gerada com sucesso!");
-                        Console.WriteLine("Senha gerada: {0}", ultimaSenhaGerada);
+                        Console.WriteLine($"Senha gerada: {ultimaSenhaGerada}");
                         Console.WriteLine("");
                         break;
                     case 3:
                         if (filaPrioritaria.Count > 0)
                         {
-                            Console.WriteLine("Senha para atendimento prioritário: {0}", filaPrioritaria.Dequeue());
+                            Console.WriteLine($"Senha para atendimento prioritário: {filaPrioritaria.Dequeue()}");
                             Console.WriteLine("");
                         }
                         else if (filaComum.Count > 0)
                         {
-                            Console.WriteLine("Senha para atendimento comum: {0}", filaComum.Dequeue());
+                            Console.WriteLine($"Senha para atendimento comum: {filaComum.Dequeue()}");
                             Console.WriteLine("");
                         }
                         else
@@ -88,7 +87,7 @@ namespace Senhas
                         }
                         else
                         {
-                            Console.WriteLine("Não é possível encerrar o atendimento, existem senhas na fila");
+                            Console.WriteLine("Não é possível encerrar o atendimento, pois ainda existem senhas para atendimento");
                             Console.WriteLine("");
                         }
                         break;
@@ -98,12 +97,12 @@ namespace Senhas
 
                         foreach (int senha in filaPrioritaria)
                         {
-                            Console.WriteLine("Senha prioritária: {0}", senha);
+                            Console.WriteLine($"Senha prioritária: {senha}");
                         }
 
                         foreach (int senha in filaComum)
                         {
-                            Console.WriteLine("Senha comum: {0}", senha);
+                            Console.WriteLine($"Senha comum: {senha}");
                         }
                         break;
                     default:
@@ -111,7 +110,7 @@ namespace Senhas
                         Console.WriteLine("");
                         break;
                 }
-            }
+            } while (!encerrarAtendimento);
             
             Console.WriteLine("Atendimento Encerrado");
             
