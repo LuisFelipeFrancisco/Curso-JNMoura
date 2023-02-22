@@ -29,30 +29,45 @@ namespace tryCatch
                 {
                     Console.WriteLine("Desculpe, ocorreu um erro que não esperávamos. Entre em contato com o suporte, ou tente novamente.");
 
-                    /*
-                    StreamWriter sw = new StreamWriter("log.txt", true);
-                    sw.WriteLine($"\n------\nData:{DateTime.Now} \n Mensagem:{ex.Message} \n StackTrace:{ex.StackTrace} \n InnerException:{ex.InnerException} \n Tipo do erro: {ex.GetType()} \n Source: {ex.Source} \n TargetSite: {ex.TargetSite}");
-                    sw.Close();
-                    sw.Dispose();
-                    */
                     using (StreamWriter sw = new StreamWriter("log.txt", true))
                     {
-                        sw.WriteLine($"\n------\nData:{DateTime.Now} \n Mensagem:{ex.Message} \n StackTrace:{ex.StackTrace} \n InnerException:{ex.InnerException} \n Tipo do erro: {ex.GetType()} \n Source: {ex.Source} \n TargetSite: {ex.TargetSite}");
+                        sw.WriteLine($"Data: {DateTime.Now}");
+                        sw.WriteLine($"Mensagem: {ex.Message}");
+                        sw.WriteLine($"StackTrace: {ex.StackTrace}");
+                        sw.WriteLine($"InnerException: {ex.InnerException}");
+                        sw.WriteLine($"Tipo de erro: {ex.GetType()}");
+                        sw.WriteLine($"Source: {ex.Source}");
+                        sw.WriteLine($"TargetSite: {ex.TargetSite}");
+                        sw.WriteLine("-------------------------------------------------");
                     }
 
                     numero1 = -1;
                 }
-                /*
+
                 finally
                 {
                     Console.WriteLine("finally");
                 }
-                */
+
             } while (numero1 < 0); // não podemos ter números negativos.
 
-
-            Console.WriteLine("--Pressione ENTER para encerrar--");
-            Console.ReadLine();
+            Console.WriteLine("Pressione qualquer tecla para sair...");
+            Console.ReadKey();
         }
     }
 }
+
+/* 
+* Criando um novo objeto do tipo StreamWriter
+* Passando o nome do arquivo que será criado e o segundo parâmetro é para informar se o arquivo será sobrescrito ou não.
+* O método WriteLine() escreve uma linha de texto no arquivo.
+* O método Close() fecha o arquivo.
+* O método Dispose() libera os recursos utilizados pelo objeto.
+* Usando o bloco using, não precisamos nos preocupar com o fechamento do arquivo, pois o bloco using já faz isso por nós.
+* Vantagens do bloco using: 
+* 1 - Não precisamos nos preocupar com o fechamento do arquivo.
+* 2 - Não precisamos nos preocupar com a liberação dos recursos utilizados pelo objeto.
+* 3 - Não precisamos nos preocupar com a criação de variáveis para armazenar o objeto.
+* Desvantagens do bloco using:
+* 1 - Não podemos utilizar o objeto em outro escopo.
+*/
