@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "door", "door\door.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jogador", "jogador\jogador.csproj", "{784C4B21-BF40-4881-9CCA-838B9A5C326E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "country", "country\country.csproj", "{11D262C1-575C-4C3E-8A55-E70618D5FF2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{784C4B21-BF40-4881-9CCA-838B9A5C326E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{784C4B21-BF40-4881-9CCA-838B9A5C326E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{784C4B21-BF40-4881-9CCA-838B9A5C326E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11D262C1-575C-4C3E-8A55-E70618D5FF2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11D262C1-575C-4C3E-8A55-E70618D5FF2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11D262C1-575C-4C3E-8A55-E70618D5FF2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11D262C1-575C-4C3E-8A55-E70618D5FF2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
