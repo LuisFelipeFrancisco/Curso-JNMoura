@@ -77,7 +77,9 @@ select count(*) from funcionario;
 select primeiro_nome, ultimo_nome from funcionario where segundo_nome is null;
 
 --10) Descreva o comando para listar os departamentos que não possuem funcionários.
-select nome from departamento where codigo not in (select codigo_departamento from funcionario);
+select nome from departamento where codigo not in (select codigo_departamento from funcionario where codigo_departamento is not null);
+--ou
+select nome from departamento d left join funcionario f on d.codigo = f.codigo_departamento where f.codigo_departamento is null;
 
 --11) Descreva o comando para excluir o departamento 8.
 ----Deletar os registros da tabela funcionario que possuem o codigo do departamento 8
@@ -107,7 +109,8 @@ update funcionario set salario = 2500 where codigo = 10;
 --Salario: R$ 12000,00
 insert into departamento values(3, 'Departamento 3');
 
-insert into funcionario values(
+set identity_insert funcionario on; -- habilita a inserção de valores para a chave primaria.
+insert into funcionario codigo, Codigo_Deparamento, Primeiro_Nome, Segundo_Nome, Ultimo_Nome, Data_Nascimento, CPF, RG, Enderco, CEP, Cidade, Fone, Funcao, Salario values(
     100, 
     3, 
     'Joaquim', 
@@ -123,20 +126,4 @@ insert into funcionario values(
     'Gerente', 
     12000
 );
-
-insert into funcionario codigo, CodigoDeparamento, Primeiro_Nome, Segundo_Nome, Ultimo_Nome, Data_Nascimento, CPF, RG, Enderco, CEP, Cidade, Fone, Funcao, Salario values(
-    100, 
-    3, 
-    'Joaquim', 
-    'Barbosa', 
-    'Silva', 
-    '1978-04-23', 
-    '28798909877',
-    '13908345X', 
-    'Av. das nações 1234', 
-    '14356234', 
-    'Campinas', 
-    '998987899', 
-    'Gerente', 
-    12000
-);
+set identity_insert funcionario off; -- desabilita a inserção de valores para a chave primaria.
