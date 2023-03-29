@@ -41,17 +41,45 @@ namespace WebApi.Controllers
         }
 
         // GET: api/Pacientes/5
-        public Models.Paciente Get(int id) 
+        public IHttpActionResult Get(int id) 
         {
-            Models.Paciente p1 = new Models.Paciente(); 
-            p1.Nome = "Luis Felipe";
+            Models.Paciente paciente = new Models.Paciente();
 
-            return p1;
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "select codigo, nome, email from paciente where codigo = @codigo;";
+                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = id;
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            paciente.Codigo = (int)dr["codigo"];
+                            paciente.Nome = (string)dr["nome"];
+                            paciente.Email = (string)dr["email"];
+                        }
+                    }
+                }
+            }
+
+            if (paciente.Codigo == 0)
+                return NotFound();
+
+            return Ok(paciente);
         }
 
         // POST: api/Pacientes
-        public void Post(Models.Paciente paciente) // Recebe um paciente
+        public IHttpActionResult Post(Models.Paciente paciente) // Recebe um paciente
         {
+            if (string.IsNullOrWhiteSpace(paciente.Nome) || string.IsNullOrWhiteSpace(paciente.Email))
+                return BadRequest("Nome ou email não podem ser nulos.");
+
             using (SqlConnection conn = new SqlConnection()) // Cria uma conexão com o banco de dados
             {
                 conn.ConnectionString = Configurations.SQLServer.getConnectionString(); // Pega a string de conexão do arquivo de configurações
@@ -60,23 +88,69 @@ namespace WebApi.Controllers
                 using (SqlCommand cmd = new SqlCommand()) // Cria um comando SQL
                 {
                     cmd.Connection = conn; // Informa a conexão que o comando SQL deve usar
-                    cmd.CommandText = "insert into paciente (codigo, nome, email) values (@codigo, @nome, @email)"; // Informa o comando SQL que deve ser executado, com parâmetros
-                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo; 
+                    cmd.CommandText = "insert into paciente (nome, email) values (@nome, @email); select convert (int, @@identity) as Codigo;"; // Informa o comando SQL que deve ser executado, com parâmetros
+                    //cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo; 
                     cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar, 200)).Value = paciente.Nome;
                     cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar, 100)).Value = paciente.Email;
-                    cmd.ExecuteNonQuery(); // Executa o comando SQL, non query pois não retorna dados
+                    
+                    paciente.Codigo = (int)cmd.ExecuteScalar();
                 }
             }
+            return Ok(paciente);
         }
 
         // PUT: api/Pacientes/5
-        public void Put(int id, [FromBody] string value)
+        public IHttpActionResult Put(int id, Models.Paciente paciente)
         {
+            if (id != paciente.Codigo)
+                return BadRequest("Código do paciente não confere.");
+            if (string.IsNullOrWhiteSpace(paciente.Nome))
+                return BadRequest("Nome do paciente não informado.");
+            if (string.IsNullOrWhiteSpace(paciente.Email))
+                return BadRequest("Email do paciente não informado.");
+
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "update paciente set nome = @nome, email = @email where codigo = @codigo;";
+                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo;
+                    cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar, 200)).Value = paciente.Nome;
+                    cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar, 100)).Value = paciente.Email;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            return Ok(paciente);
         }
 
         // DELETE: api/Pacientes/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            int linhaAfetadas = 0;
+
+            using (SqlConnection conn = new SqlConnection())
+            {
+                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "delete from paciente where codigo = @codigo;";
+                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = id;
+
+                    linhaAfetadas = cmd.ExecuteNonQuery();
+                }
+            }
+            if (linhaAfetadas == 0)
+                return NotFound();
+
+            return Ok();
         }
     }
 }
