@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Web.Http;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
@@ -37,7 +40,6 @@ namespace WebApi.Controllers
             }
 
             return pacientes;
-
         }
 
         // GET: api/Pacientes/5
@@ -77,26 +79,45 @@ namespace WebApi.Controllers
         // POST: api/Pacientes
         public IHttpActionResult Post(Models.Paciente paciente) // Recebe um paciente
         {
-            if (string.IsNullOrWhiteSpace(paciente.Nome) || string.IsNullOrWhiteSpace(paciente.Email))
-                return BadRequest("Nome ou email não podem ser nulos.");
-
-            using (SqlConnection conn = new SqlConnection()) // Cria uma conexão com o banco de dados
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString(); // Pega a string de conexão do arquivo de configurações
-                conn.Open(); // Abre a conexão com o banco de dados
+                if (string.IsNullOrWhiteSpace(paciente.Nome) || string.IsNullOrWhiteSpace(paciente.Email))
+                    return BadRequest("Nome ou email não podem ser nulos.");
 
-                using (SqlCommand cmd = new SqlCommand()) // Cria um comando SQL
+                using (SqlConnection conn = new SqlConnection()) // Cria uma conexão com o banco de dados
                 {
-                    cmd.Connection = conn; // Informa a conexão que o comando SQL deve usar
-                    cmd.CommandText = "insert into paciente (nome, email) values (@nome, @email); select convert (int, @@identity) as Codigo;"; // Informa o comando SQL que deve ser executado, com parâmetros
-                    //cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo; 
-                    cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar, 200)).Value = paciente.Nome;
-                    cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar, 100)).Value = paciente.Email;
-                    
-                    paciente.Codigo = (int)cmd.ExecuteScalar();
+                    conn.ConnectionString = Configurations.SQLServer.getConnectionString(); // Pega a string de conexão do arquivo de configurações
+                    conn.Open(); // Abre a conexão com o banco de dados
+
+                    using (SqlCommand cmd = new SqlCommand()) // Cria um comando SQL
+                    {
+                        cmd.Connection = conn; // Informa a conexão que o comando SQL deve usar
+                        cmd.CommandText = "insert into paciente (nome, email) values (@nome, @email); select convert (int, @@identity) as Codigo;"; // Informa o comando SQL que deve ser executado, com parâmetros
+                        //cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo; 
+                        cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar)).Value = paciente.Nome;
+                        cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar)).Value = paciente.Email;
+
+                        paciente.Codigo = (int)cmd.ExecuteScalar();
+                    }
                 }
+                return Ok(paciente);
             }
-            return Ok(paciente);
+            catch (Exception ex)
+            {
+                using (StreamWriter sw = new StreamWriter(Configurations.Log.getLogPath(), true))
+                {
+                   System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                     sb.AppendLine("Data: " + DateTime.Now.ToString());
+                        sb.AppendLine("Mensagem: " + ex.Message);
+                        sb.AppendLine("StackTrace: " + ex.StackTrace);
+                        sb.AppendLine("InnerException: " + ex.InnerException);
+                        sb.AppendLine("Source: " + ex.Source);
+                        sb.AppendLine("TargetSite: " + ex.TargetSite);
+                        sb.AppendLine("--------------------------------------------------");
+                        sw.WriteLine(sb.ToString());
+                }
+                return InternalServerError();
+            }
         }
 
         // PUT: api/Pacientes/5
@@ -104,10 +125,8 @@ namespace WebApi.Controllers
         {
             if (id != paciente.Codigo)
                 return BadRequest("Código do paciente não confere.");
-            if (string.IsNullOrWhiteSpace(paciente.Nome))
-                return BadRequest("Nome do paciente não informado.");
-            if (string.IsNullOrWhiteSpace(paciente.Email))
-                return BadRequest("Email do paciente não informado.");
+            if (string.IsNullOrWhiteSpace(paciente.Nome) || string.IsNullOrWhiteSpace(paciente.Email))
+                return BadRequest("Nome e/ou Email não foram informados");
 
             using (SqlConnection conn = new SqlConnection())
             {
@@ -119,8 +138,8 @@ namespace WebApi.Controllers
                     cmd.Connection = conn;
                     cmd.CommandText = "update paciente set nome = @nome, email = @email where codigo = @codigo;";
                     cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo;
-                    cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar, 200)).Value = paciente.Nome;
-                    cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar, 100)).Value = paciente.Email;
+                    cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar)).Value = paciente.Nome;
+                    cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar)).Value = paciente.Email;
 
                     cmd.ExecuteNonQuery();
                 }
