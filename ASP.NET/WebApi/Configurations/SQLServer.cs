@@ -9,7 +9,7 @@ namespace WebApi.Configurations
     {
         public static string getConnectionString()
         {
-            return @"Server=DESKTOP-NI7KH0M\SQLEXPRESS;Database=consultorio;Trusted_Connection=True;";
+            return System.Configuration.ConfigurationManager.ConnectionStrings["consultorio"].ConnectionString;
         }
     }
 }

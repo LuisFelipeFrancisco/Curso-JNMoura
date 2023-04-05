@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Web.Http;
@@ -9,34 +8,9 @@ namespace WebApi.Controllers
     public class MedicosController : ApiController
     {
         // GET: api/Medicos
-        public List<Models.Medico> Get()
+        public IHttpActionResult Get()
         {
-            List<Models.Medico> medicos = new List<Models.Medico>();
-            using (SqlConnection conn = new SqlConnection())
-            {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                conn.Open();
-
-                string commandText = "select codigo, nome, crm, datanascimento from medico;";
-
-                using (SqlCommand cmd = new SqlCommand(commandText, conn))
-                {
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            Models.Medico medico = new Models.Medico();
-                            medico.Codigo = (int)dr["codigo"];
-                            medico.Nome = dr["nome"].ToString();
-                            medico.Crm = dr["crm"].ToString();
-                            medico.DataNascimento = dr["datanascimento"] == DBNull.Value ? null : (DateTime?)dr["datanascimento"];
-
-                            medicos.Add(medico);
-                        }
-                    }
-                }
-            }
-            return medicos;
+            return Ok(Repositories.Database.SQLServer.Medico.Get(Configurations.SQLServer.getConnectionString()));
         }
 
         // GET: api/Medicos/5
