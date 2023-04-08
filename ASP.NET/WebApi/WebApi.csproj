@@ -115,6 +115,10 @@
     <Folder Include="Views\Pacientes\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logger\Logger.csproj">
+      <Project>{687c4bba-5e9e-4435-9110-d3cd6d201177}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{7b2139b8-bc08-450e-b0b5-08dfd768074c}</Project>
       <Name>Models</Name>

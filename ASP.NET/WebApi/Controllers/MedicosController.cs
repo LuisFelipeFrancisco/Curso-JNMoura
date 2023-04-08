@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Data.SqlClient;
-using System.IO;
 using System.Web.Http;
 
 namespace WebApi.Controllers
@@ -10,42 +8,34 @@ namespace WebApi.Controllers
         // GET: api/Medicos
         public IHttpActionResult Get()
         {
-            return Ok(Repositories.Database.SQLServer.Medico.Get(Configurations.SQLServer.getConnectionString()));
+            try
+            {
+                return Ok(Repositories.Database.SQLServer.ADO.Medico.Get(Configurations.SQLServer.getConnectionString()));
+            }
+            catch (Exception ex) 
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
         }
 
         // GET: api/Medicos/5
         public IHttpActionResult Get(int id)
         {
-            Models.Medico medico = new Models.Medico();
-
-            using (SqlConnection conn = new SqlConnection())
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                conn.Open();
+                Models.Medico medico = Repositories.Database.SQLServer.ADO.Medico.getById(id,Configurations.SQLServer.getConnectionString());
+                if (medico.Codigo == 0)
+                    return NotFound();
 
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "select codigo, nome, crm, datanascimento from medico where codigo = @codigo;";
-                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = id;
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        if (dr.Read())
-                        {
-                            medico.Codigo = (int)dr["codigo"];
-                            medico.Nome = dr["nome"].ToString();
-                            medico.Crm = dr["crm"].ToString();
-                            medico.DataNascimento = dr["datanascimento"] == DBNull.Value ? null : (DateTime?)dr["datanascimento"];
-                        }
-                    }
-                }
+                return Ok(medico);
             }
-
-            if (medico.Codigo == 0)
-                return NotFound();
-
-            return Ok(medico);
+            catch (Exception ex)
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
+        
         }
 
         // POST: api/Medicos
@@ -55,41 +45,17 @@ namespace WebApi.Controllers
             {
                 if (String.IsNullOrWhiteSpace(medico.Nome) || String.IsNullOrWhiteSpace(medico.Crm))
                     return BadRequest("Nome e CRM são obrigatórios.");
-                
-                using (SqlConnection conn= new SqlConnection())
-                {
-                    conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                    conn.Open();
 
-                    string commandText = "insert into medico (nome, crm, datanascimento) values (@nome, @crm, @datanascimento); select convert (int, @@identity) as Codigo;";
+                if (medico.Nome.Length > 200 || medico.Crm.Length > 9)
+                    return BadRequest("Nome não pode ser maior que 200, Crm não pode ser maior que 9");
 
-                    using (SqlCommand cmd = new SqlCommand(commandText, conn))
-                    {
-                        //cmd.Parameters.AddWithValue("@nome", medico.Nome); // AddWithValue é um método de SqlCommand que adiciona um parâmetro ao comando SQL e define seu valor, sem a necessidade de especificar o tipo do parâmetro.
-                        cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar)).Value = medico.Nome; // Add é um método de SqlCommand que adiciona um parâmetro ao comando SQL.
-                        cmd.Parameters.Add(new SqlParameter("@crm", System.Data.SqlDbType.VarChar)).Value = medico.Crm;
-                        cmd.Parameters.Add(new SqlParameter("@datanascimento", System.Data.SqlDbType.DateTime)).Value = medico.DataNascimento;
+                Repositories.Database.SQLServer.ADO.Medico.add(medico, Configurations.SQLServer.getConnectionString());
 
-                        //cmd.ExecuteNonQuery();
-                        medico.Codigo = (int) cmd.ExecuteScalar(); // Executa o comando SQL e retorna o primeiro valor da primeira linha da primeira coluna do resultado. Se não houver resultado, retorna null.
-                    }
-                }
                 return Ok(medico);
             }
             catch (Exception ex)
             {
-               using (StreamWriter sw = new StreamWriter(Configurations.Log.getLogPath(), true))
-                {
-                   System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                     sb.AppendLine("Data: " + DateTime.Now.ToString());
-                        sb.AppendLine("Mensagem: " + ex.Message);
-                        sb.AppendLine("StackTrace: " + ex.StackTrace);
-                        sb.AppendLine("InnerException: " + ex.InnerException);
-                        sb.AppendLine("Source: " + ex.Source);
-                        sb.AppendLine("TargetSite: " + ex.TargetSite);
-                        sb.AppendLine("--------------------------------------------------");
-                        sw.WriteLine(sb.ToString());
-                }
+                Logger.Log.write (ex, Configurations.Log.getLogPath());
                 return InternalServerError(); 
             }   
         }   
@@ -97,54 +63,44 @@ namespace WebApi.Controllers
         // PUT: api/Medicos/5
         public IHttpActionResult Put(int id, Models.Medico medico)
         {
-            if (id != medico.Codigo)
-                return BadRequest("Código do médico inválido.");
-            if (String.IsNullOrWhiteSpace(medico.Nome) || String.IsNullOrWhiteSpace(medico.Crm))
-                return BadRequest("Nome e CRM são obrigatórios.");
-            
-            using (SqlConnection conn = new SqlConnection())
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                conn.Open();
+                if (id != medico.Codigo)
+                    return BadRequest("Código do médico inválido.");
+                if (String.IsNullOrWhiteSpace(medico.Nome) || String.IsNullOrWhiteSpace(medico.Crm))
+                    return BadRequest("Nome e CRM são obrigatórios.");
 
-                string commandText = "update medico set nome = @nome, crm = @crm, datanascimento = @datanascimento where codigo = @codigo;";
+                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.update(id, medico, Configurations.SQLServer.getConnectionString());
 
-                using (SqlCommand cmd = new SqlCommand(commandText, conn))
-                {
-                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = medico.Codigo;
-                    cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar)).Value = medico.Nome;
-                    cmd.Parameters.Add(new SqlParameter("@crm", System.Data.SqlDbType.VarChar)).Value = medico.Crm;
-                    cmd.Parameters.Add(new SqlParameter("@datanascimento", System.Data.SqlDbType.DateTime)).Value = medico.DataNascimento;
+                if (linhasAfetadas == 0)
+                    return NotFound();
 
-                    cmd.ExecuteNonQuery();
-                }
+                return Ok(medico);
             }
-            return Ok(medico);
+            catch (Exception ex)
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
         }
 
         // DELETE: api/Medicos/5
         public IHttpActionResult Delete(int id)
         {
-            int linhasAfetadas = 0;
-
-            using (SqlConnection conn = new SqlConnection())
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                conn.Open();
+                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.delete(id, Configurations.SQLServer.getConnectionString());
 
-                string commandText = "delete from medico where codigo = @codigo;";
+                if (linhasAfetadas == 0)
+                    return NotFound();
 
-                using (SqlCommand cmd = new SqlCommand(commandText, conn))
-                {
-                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = id;
-
-                    linhasAfetadas = cmd.ExecuteNonQuery();
-                }
+                return Ok();
             }
-            if (linhasAfetadas == 0)
-                return NotFound();
-
-            return Ok();
+            catch (Exception ex)
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
         }
     }
 }
