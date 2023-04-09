@@ -8,7 +8,6 @@ namespace Repositories.Database.SQLServer.ADO
     {
         public static List<Models.Medico> Get (string connectionString)
         {
-
             List<Models.Medico> medicos = new List<Models.Medico>();
             using (SqlConnection conn = new SqlConnection())
             {
@@ -37,7 +36,7 @@ namespace Repositories.Database.SQLServer.ADO
             return medicos;
         }
         
-        public static Models.Medico getById (int id, string connectionString)
+        public static Models.Medico GetById (int id, string connectionString)
         {
             Models.Medico medico = new Models.Medico();
 
@@ -67,7 +66,7 @@ namespace Repositories.Database.SQLServer.ADO
             return medico;
         }
 
-        public static void add (Models.Medico medico, string connectionString)
+        public static void Add (Models.Medico medico, string connectionString)
         {
             using (SqlConnection conn = new SqlConnection())
             {
@@ -89,7 +88,7 @@ namespace Repositories.Database.SQLServer.ADO
             }
         }
 
-        public static int update (int id, Models.Medico medico, string connectionString)
+        public static int Update (int id, Models.Medico medico, string connectionString)
         {
             int linhasAfetadas = 0;
 
@@ -118,7 +117,7 @@ namespace Repositories.Database.SQLServer.ADO
             return linhasAfetadas;
         }
 
-        public static int delete (int id, string connectionString)
+        public static int Delete (int id, string connectionString)
         {
             int linhasAfetadas = 0;
 
@@ -139,6 +138,5 @@ namespace Repositories.Database.SQLServer.ADO
             }
             return linhasAfetadas;
         }
-
     }
 }

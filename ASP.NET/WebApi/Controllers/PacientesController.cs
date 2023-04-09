@@ -9,166 +9,96 @@ namespace WebApi.Controllers
     public class PacientesController : ApiController
     {
         // GET: api/Pacientes
-        public List<Models.Paciente> Get()
+        public IHttpActionResult Get ()
         {
-            List<Models.Paciente> pacientes = new List<Models.Paciente>(); // Cria uma lista de pacientes
-
-            using (SqlConnection conn = new SqlConnection()) // Cria uma conexão com o banco de dados
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString(); // Pega a string de conexão do arquivo de configurações
-                conn.Open(); // Abre a conexão com o banco de dados
-
-                //select codigo, nome, email from paciente;
-                string commandText = "select codigo, nome, email from paciente;";
-
-                using (SqlCommand cmd = new SqlCommand(commandText, conn)) // Cria um comando SQL
-                {
-                    using (SqlDataReader dr = cmd.ExecuteReader()) // Executa o comando SQL e retorna um leitor de dados
-                    {
-                        while (dr.Read()) // Enquanto houver dados para ler
-                        {
-                            Models.Paciente paciente = new Models.Paciente();
-                            paciente.Codigo = (int)dr["codigo"];
-                            paciente.Nome = (string)dr["nome"];
-                            paciente.Email = (string)dr["email"];
-
-                            pacientes.Add(paciente); // Adiciona o paciente na lista de pacientes
-                        }
-                    }
-                }
+                return Ok(Repositories.Database.SQLServer.ADO.Paciente.Get(Configurations.SQLServer.getConnectionString()));
             }
-
-            return pacientes;
+            catch (Exception ex)
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
         }
 
         // GET: api/Pacientes/5
-        public IHttpActionResult Get(int id) 
+        public IHttpActionResult Get (int id) 
         {
-            Models.Paciente paciente = new Models.Paciente();
-
-            using (SqlConnection conn = new SqlConnection())
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                conn.Open();
+                Models.Paciente paciente = Repositories.Database.SQLServer.ADO.Paciente.GetById(id, Configurations.SQLServer.getConnectionString());
+                if (paciente.Codigo == 0)
+                    return NotFound();
 
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "select codigo, nome, email from paciente where codigo = @codigo;";
-                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = id;
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        if (dr.Read())
-                        {
-                            paciente.Codigo = (int)dr["codigo"];
-                            paciente.Nome = (string)dr["nome"];
-                            paciente.Email = (string)dr["email"];
-                        }
-                    }
-                }
+                return Ok(paciente);
             }
-
-            if (paciente.Codigo == 0)
-                return NotFound();
-
-            return Ok(paciente);
+            catch (Exception ex)
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
         }
 
         // POST: api/Pacientes
-        public IHttpActionResult Post(Models.Paciente paciente) // Recebe um paciente
+        public IHttpActionResult Post (Models.Paciente paciente) // Recebe um paciente
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(paciente.Nome) || string.IsNullOrWhiteSpace(paciente.Email))
                     return BadRequest("Nome ou email não podem ser nulos.");
 
-                using (SqlConnection conn = new SqlConnection()) // Cria uma conexão com o banco de dados
-                {
-                    conn.ConnectionString = Configurations.SQLServer.getConnectionString(); // Pega a string de conexão do arquivo de configurações
-                    conn.Open(); // Abre a conexão com o banco de dados
-
-                    using (SqlCommand cmd = new SqlCommand()) // Cria um comando SQL
-                    {
-                        cmd.Connection = conn; // Informa a conexão que o comando SQL deve usar
-                        cmd.CommandText = "insert into paciente (nome, email) values (@nome, @email); select convert (int, @@identity) as Codigo;"; // Informa o comando SQL que deve ser executado, com parâmetros
-                        //cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo; 
-                        cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar)).Value = paciente.Nome;
-                        cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar)).Value = paciente.Email;
-
-                        paciente.Codigo = (int)cmd.ExecuteScalar();
-                    }
-                }
+                Repositories.Database.SQLServer.ADO.Paciente.Add(paciente, Configurations.SQLServer.getConnectionString());
                 return Ok(paciente);
             }
             catch (Exception ex)
             {
-                using (StreamWriter sw = new StreamWriter(Configurations.Log.getLogPath(), true))
-                {
-                   System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                     sb.AppendLine("Data: " + DateTime.Now.ToString());
-                        sb.AppendLine("Mensagem: " + ex.Message);
-                        sb.AppendLine("StackTrace: " + ex.StackTrace);
-                        sb.AppendLine("InnerException: " + ex.InnerException);
-                        sb.AppendLine("Source: " + ex.Source);
-                        sb.AppendLine("TargetSite: " + ex.TargetSite);
-                        sb.AppendLine("--------------------------------------------------");
-                        sw.WriteLine(sb.ToString());
-                }
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
                 return InternalServerError();
             }
         }
 
         // PUT: api/Pacientes/5
-        public IHttpActionResult Put(int id, Models.Paciente paciente)
+        public IHttpActionResult Put (int id, Models.Paciente paciente)
         {
-            if (id != paciente.Codigo)
-                return BadRequest("Código do paciente não confere.");
-            if (string.IsNullOrWhiteSpace(paciente.Nome) || string.IsNullOrWhiteSpace(paciente.Email))
-                return BadRequest("Nome e/ou Email não foram informados");
-
-            using (SqlConnection conn = new SqlConnection())
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                conn.Open();
+                if (id != paciente.Codigo)
+                    return BadRequest("Código do paciente não confere.");
+                if (string.IsNullOrWhiteSpace(paciente.Nome) || string.IsNullOrWhiteSpace(paciente.Email))
+                    return BadRequest("Nome e/ou Email não foram informados");
 
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "update paciente set nome = @nome, email = @email where codigo = @codigo;";
-                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo;
-                    cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar)).Value = paciente.Nome;
-                    cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar)).Value = paciente.Email;
+                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Paciente.Update(id, paciente, Configurations.SQLServer.getConnectionString());
 
-                    cmd.ExecuteNonQuery();
-                }
+                if (linhasAfetadas == 0)
+                    return NotFound();
+
+                return Ok(paciente);
             }
-            return Ok(paciente);
+            catch (Exception ex)
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
         }
 
         // DELETE: api/Pacientes/5
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete (int id)
         {
-            int linhaAfetadas = 0;
-
-            using (SqlConnection conn = new SqlConnection())
+            try
             {
-                conn.ConnectionString = Configurations.SQLServer.getConnectionString();
-                conn.Open();
+                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Paciente.Delete(id, Configurations.SQLServer.getConnectionString());
 
-                using (SqlCommand cmd = new SqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "delete from paciente where codigo = @codigo;";
-                    cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = id;
+                if (linhasAfetadas == 0)
+                    return NotFound();
 
-                    linhaAfetadas = cmd.ExecuteNonQuery();
-                }
+                return Ok();
             }
-            if (linhaAfetadas == 0)
-                return NotFound();
-
-            return Ok();
+            catch (Exception ex)
+            {
+                Logger.Log.write(ex, Configurations.Log.getLogPath());
+                return InternalServerError();
+            }
         }
     }
 }

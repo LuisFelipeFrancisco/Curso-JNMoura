@@ -6,7 +6,7 @@ namespace WebApi.Controllers
     public class MedicosController : ApiController
     {
         // GET: api/Medicos
-        public IHttpActionResult Get()
+        public IHttpActionResult Get ()
         {
             try
             {
@@ -20,11 +20,11 @@ namespace WebApi.Controllers
         }
 
         // GET: api/Medicos/5
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get (int id)
         {
             try
             {
-                Models.Medico medico = Repositories.Database.SQLServer.ADO.Medico.getById(id,Configurations.SQLServer.getConnectionString());
+                Models.Medico medico = Repositories.Database.SQLServer.ADO.Medico.GetById(id,Configurations.SQLServer.getConnectionString());
                 if (medico.Codigo == 0)
                     return NotFound();
 
@@ -35,11 +35,10 @@ namespace WebApi.Controllers
                 Logger.Log.write(ex, Configurations.Log.getLogPath());
                 return InternalServerError();
             }
-        
         }
 
         // POST: api/Medicos
-        public IHttpActionResult Post(Models.Medico medico)
+        public IHttpActionResult Post (Models.Medico medico)
         {
             try
             {
@@ -49,7 +48,7 @@ namespace WebApi.Controllers
                 if (medico.Nome.Length > 200 || medico.Crm.Length > 9)
                     return BadRequest("Nome não pode ser maior que 200, Crm não pode ser maior que 9");
 
-                Repositories.Database.SQLServer.ADO.Medico.add(medico, Configurations.SQLServer.getConnectionString());
+                Repositories.Database.SQLServer.ADO.Medico.Add(medico, Configurations.SQLServer.getConnectionString());
 
                 return Ok(medico);
             }
@@ -61,7 +60,7 @@ namespace WebApi.Controllers
         }   
 
         // PUT: api/Medicos/5
-        public IHttpActionResult Put(int id, Models.Medico medico)
+        public IHttpActionResult Put (int id, Models.Medico medico)
         {
             try
             {
@@ -70,7 +69,7 @@ namespace WebApi.Controllers
                 if (String.IsNullOrWhiteSpace(medico.Nome) || String.IsNullOrWhiteSpace(medico.Crm))
                     return BadRequest("Nome e CRM são obrigatórios.");
 
-                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.update(id, medico, Configurations.SQLServer.getConnectionString());
+                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.Update(id, medico, Configurations.SQLServer.getConnectionString());
 
                 if (linhasAfetadas == 0)
                     return NotFound();
@@ -85,11 +84,11 @@ namespace WebApi.Controllers
         }
 
         // DELETE: api/Medicos/5
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete (int id)
         {
             try
             {
-                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.delete(id, Configurations.SQLServer.getConnectionString());
+                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.Delete(id, Configurations.SQLServer.getConnectionString());
 
                 if (linhasAfetadas == 0)
                     return NotFound();
