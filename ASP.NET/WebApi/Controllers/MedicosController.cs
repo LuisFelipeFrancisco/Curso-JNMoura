@@ -5,12 +5,18 @@ namespace WebApi.Controllers
 {
     public class MedicosController : ApiController
     {
+        private readonly Repositories.IRepository<Models.Medico> repository;
+        public MedicosController()
+        {
+            repository = new Repositories.Database.SQLServer.ADO.Medico(Configurations.SQLServer.getConnectionString());
+        }
+
         // GET: api/Medicos
         public IHttpActionResult Get ()
         {
             try
             {
-                return Ok(Repositories.Database.SQLServer.ADO.Medico.Get(Configurations.SQLServer.getConnectionString()));
+                return Ok(repository.Get());
             }
             catch (Exception ex) 
             {
@@ -24,7 +30,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                Models.Medico medico = Repositories.Database.SQLServer.ADO.Medico.GetById(id,Configurations.SQLServer.getConnectionString());
+                Models.Medico medico = repository.GetById(id);
                 if (medico.Codigo == 0)
                     return NotFound();
 
@@ -42,13 +48,10 @@ namespace WebApi.Controllers
         {
             try
             {
-                if (String.IsNullOrWhiteSpace(medico.Nome) || String.IsNullOrWhiteSpace(medico.Crm))
-                    return BadRequest("Nome e CRM são obrigatórios.");
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-                if (medico.Nome.Length > 200 || medico.Crm.Length > 9)
-                    return BadRequest("Nome não pode ser maior que 200, Crm não pode ser maior que 9");
-
-                Repositories.Database.SQLServer.ADO.Medico.Add(medico, Configurations.SQLServer.getConnectionString());
+                repository.Add(medico);
 
                 return Ok(medico);
             }
@@ -65,11 +68,11 @@ namespace WebApi.Controllers
             try
             {
                 if (id != medico.Codigo)
-                    return BadRequest("Código do médico inválido.");
-                if (String.IsNullOrWhiteSpace(medico.Nome) || String.IsNullOrWhiteSpace(medico.Crm))
-                    return BadRequest("Nome e CRM são obrigatórios.");
+                    ModelState.AddModelError("Codigo", "O código do médico não confere com o código informado na URL!");
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.Update(id, medico, Configurations.SQLServer.getConnectionString());
+                int linhasAfetadas = repository.Update(id, medico);
 
                 if (linhasAfetadas == 0)
                     return NotFound();
@@ -88,7 +91,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                int linhasAfetadas = Repositories.Database.SQLServer.ADO.Medico.Delete(id, Configurations.SQLServer.getConnectionString());
+                int linhasAfetadas = repository.Delete(id);
 
                 if (linhasAfetadas == 0)
                     return NotFound();

@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositories.Database.SQLServer.ADO
 {
-    public class Paciente
+    public class Paciente: IRepository<Models.Paciente>
     {
-        public static List<Models.Paciente> Get (string connectionString)
+        private readonly SqlConnection conn;
+        public Paciente (string connectionString)
+        {
+            conn = new SqlConnection(connectionString);
+        }
+
+        public List<Models.Paciente> Get ()
         {
             List<Models.Paciente> pacientes = new List<Models.Paciente>(); // Cria uma lista de pacientes
 
-            using (SqlConnection conn = new SqlConnection()) // Cria uma conexão com o banco de dados
+            using (conn) // Cria uma conexão com o banco de dados
             {
-                conn.ConnectionString = connectionString; // Pega a string de conexão do arquivo de configurações
+                //conn.ConnectionString = connectionString; // Pega a string de conexão do arquivo de configurações
                 conn.Open(); // Abre a conexão com o banco de dados
 
                 //select codigo, nome, email from paciente;
@@ -40,13 +42,12 @@ namespace Repositories.Database.SQLServer.ADO
             return pacientes;
         }
 
-        public static Models.Paciente GetById (int id, string connectionString)
+        public Models.Paciente GetById (int id)
         {
             Models.Paciente paciente = new Models.Paciente();
 
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 using (SqlCommand cmd = new SqlCommand())
@@ -69,18 +70,17 @@ namespace Repositories.Database.SQLServer.ADO
             return paciente;
         }
 
-        public static void Add (Models.Paciente paciente, string connectionString)
+        public void Add (Models.Paciente paciente)
         {
-            using (SqlConnection conn = new SqlConnection()) // Cria uma conexão com o banco de dados
+            using (conn) // Cria uma conexão com o banco de dados
             {
-                conn.ConnectionString = connectionString; // Pega a string de conexão do arquivo de configurações
                 conn.Open(); // Abre a conexão com o banco de dados
 
                 using (SqlCommand cmd = new SqlCommand()) // Cria um comando SQL
                 {
                     cmd.Connection = conn; // Informa a conexão que o comando SQL deve usar
                     cmd.CommandText = "insert into paciente (nome, email) values (@nome, @email); select convert (int, @@identity) as Codigo;"; // Informa o comando SQL que deve ser executado, com parâmetros
-                                                                                                                                           //cmd.Parameters.Add(new SqlParameter("@codigo", System.Data.SqlDbType.Int)).Value = paciente.Codigo; 
+                                                                                                                       
                     cmd.Parameters.Add(new SqlParameter("@nome", System.Data.SqlDbType.VarChar)).Value = paciente.Nome;
                     cmd.Parameters.Add(new SqlParameter("@email", System.Data.SqlDbType.VarChar)).Value = paciente.Email;
 
@@ -89,13 +89,12 @@ namespace Repositories.Database.SQLServer.ADO
             }
         }
 
-        public static int Update (int id, Models.Paciente paciente, string connectionString)
+        public int Update (int id, Models.Paciente paciente)
         {
             int linhasAfetadas = 0;
 
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 using (SqlCommand cmd = new SqlCommand())
@@ -112,13 +111,12 @@ namespace Repositories.Database.SQLServer.ADO
             return linhasAfetadas;
         }
 
-        public static int Delete(int id, string connectionString)
+        public int Delete (int id)
         {
             int linhaAfetadas = 0;
 
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 using (SqlCommand cmd = new SqlCommand())

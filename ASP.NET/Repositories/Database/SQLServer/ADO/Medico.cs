@@ -4,14 +4,19 @@ using System.Data.SqlClient;
 
 namespace Repositories.Database.SQLServer.ADO
 {
-    public class Medico
+    public class Medico: IRepository<Models.Medico>
     {
-        public static List<Models.Medico> Get (string connectionString)
+        private readonly SqlConnection conn; // readonly: o valor de uma variável readonly pode ser atribuído apenas no momento da declaração ou no construtor da classe.
+        public Medico (String connectionString)
+        {
+            conn = new SqlConnection (connectionString);
+        }
+
+        public List<Models.Medico> Get ()
         {
             List<Models.Medico> medicos = new List<Models.Medico>();
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 string commandText = "select codigo, nome, crm, datanascimento from medico;";
@@ -36,13 +41,12 @@ namespace Repositories.Database.SQLServer.ADO
             return medicos;
         }
         
-        public static Models.Medico GetById (int id, string connectionString)
+        public Models.Medico GetById (int id)
         {
             Models.Medico medico = new Models.Medico();
 
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 using (SqlCommand cmd = new SqlCommand())
@@ -66,11 +70,10 @@ namespace Repositories.Database.SQLServer.ADO
             return medico;
         }
 
-        public static void Add (Models.Medico medico, string connectionString)
+        public void Add (Models.Medico medico)
         {
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 string commandText = "insert into medico (nome, crm, datanascimento) values (@nome, @crm, @datanascimento); select convert (int, @@identity) as Codigo;";
@@ -88,13 +91,12 @@ namespace Repositories.Database.SQLServer.ADO
             }
         }
 
-        public static int Update (int id, Models.Medico medico, string connectionString)
+        public int Update (int id, Models.Medico medico)
         {
             int linhasAfetadas = 0;
 
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 using (SqlCommand cmd = new SqlCommand())
@@ -117,13 +119,12 @@ namespace Repositories.Database.SQLServer.ADO
             return linhasAfetadas;
         }
 
-        public static int Delete (int id, string connectionString)
+        public int Delete (int id)
         {
             int linhasAfetadas = 0;
 
-            using (SqlConnection conn = new SqlConnection())
+            using (conn)
             {
-                conn.ConnectionString = connectionString;
                 conn.Open();
 
                 using (SqlCommand cmd = new SqlCommand())
