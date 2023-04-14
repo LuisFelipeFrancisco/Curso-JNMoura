@@ -1,0 +1,59 @@
+/* 
+header{
+    width: 100%;
+    height: 200px;
+    background-color: red;
+}
+
+nav{
+    width: 20%;
+    height: 500px;
+    background-color: green;
+    float: left;
+}
+
+main{
+    width: 80%;
+    height: 500px;
+    background-color: yellow;
+    float: left;
+}
+
+footer{
+    width: 100%;
+    height: 100px;
+    background-color: gray;
+    float: left;
+}
+ */
+
+/* But we can do this with grid */
+
+body{
+    display: grid;
+    grid-template-areas: "header header header header"
+                         "nav main main main"
+                         "footer footer footer footer";
+    grid-template-rows: 200px 500px 100px;
+    grid-template-columns: 20% 80%;
+}
+
+header{
+    grid-area: header;
+    background-color: red;
+}
+
+nav{
+    grid-area: nav;
+    background-color: green;
+}
+
+main{
+    grid-area: main;
+    background-color: yellow;
+}
+
+footer{
+    grid-area: footer;
+    background-color: gray;
+}
