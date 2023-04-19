@@ -31,29 +31,29 @@ footer{
 
 body{
     display: grid;
-    grid-template-areas: "header header header header"
-                         "nav main main main"
-                         "footer footer footer footer";
+    grid-template-areas: "header header"
+                         "nav main"
+                         "footer footer";
     grid-template-rows: 200px 500px 100px;
     grid-template-columns: 20% 80%;
 }
 
 header{
     grid-area: header;
-    background-color: red;
+    background-color: rgb(255, 0, 0);
 }
 
 nav{
     grid-area: nav;
-    background-color: green;
+    background-color: rgb(0, 255, 0);
 }
 
 main{
     grid-area: main;
-    background-color: yellow;
+    background-color: rgb(255, 255, 0);
 }
 
 footer{
     grid-area: footer;
-    background-color: gray;
+    background-color: rgb(140, 140, 140);
 }

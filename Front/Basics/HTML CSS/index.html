@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
+    <script>
+        function enviar() {
+            alert("Enviado!");
+            console.log(document.getElementById("nome").value); 
+            console.log(document.querySelector("#data").value);
+            console.log(document.getElementById("email").value);            
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Topo</h1>
+    </header>
+    <nav>
+        <ul>
+            <li>Cadastro de Cliente</li>
+            <li>menu1</li>
+            <li>menu2</li>
+            <li>menu3</li>
+        </ul>
+    </nav>
+    <main>
+        <p>Conteúdo Principal</p>
+        <table>
+            <form>
+                <tr>
+                    <td><label for="nome">Nome: </label></td>
+                    <td><input type="text" id="nome" placeholder="Nome"></td>
+                </tr>
+                <tr>
+                    <td><label for="data">Data de Nascimento: </label></td>
+                    <td><input type="date" id="data"></td>
+                </tr>
+                <tr>
+                    <td><label for="email">E-mail: </label></td>
+                    <td><input type="text" id="email" placeholder="E-mail"></td>
+                </tr>
+                <tr>
+                    <td><button type="button" onclick="enviar()">Enviar</button></td>
+                </tr>
+            </form>
+        </table>
+    </main>
+    <footer>
+        Rodapé
+    </footer>
+</body>
+</html>
