@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/pure.css">
+    <script src="js/index.js"></script>
+    <title>Medicos</title>
+</head>
+<body>
+    <nav class="pure-menu pure-menu-horizontal">
+        <a href="../index.html" class="pure-menu-heading pure-menu-link">HOME</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item">
+                <a href="../medico/index.html" class="pure-menu-link">Medicos</a>
+            </li>
+            <li class="pure-menu-item">
+                <a href="../paciente/index.html" class="pure-menu-link">Pacientes</a>
+            </li>
+            </li>
+        </ul>
+    </nav>
+    <h1>Lista de Medicos</h1>
+    <form class="pure-form">
+        <label for="codigo">Código:</label>
+        <input type="text" class="pure-input-rounded" id="codigo">
+        <button type="button" class="pure-button" onclick="get()">Pesquisar</button>
+    </form>
+    <table class="pure-table pure-table-striped">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>CRM</th>
+        </tr>
+        </thead>
+        <tbody id="dadosTabelaMedico">
+        </tbody>
+    </table>
+</body>
+</html>
