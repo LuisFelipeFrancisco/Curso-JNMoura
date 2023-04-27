@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/pure.css">
     <script src="js/index.js"></script>
+    <style>
+        #tabelaMedicos{
+            margin-top: 20px;
+        }
+    </style>
     <title>Medicos</title>
 </head>
 <body>
@@ -18,16 +23,16 @@
             <li class="pure-menu-item">
                 <a href="../paciente/index.html" class="pure-menu-link">Pacientes</a>
             </li>
-            </li>
         </ul>
     </nav>
     <h1>Lista de Medicos</h1>
     <form class="pure-form">
         <label for="codigo">Código:</label>
         <input type="text" class="pure-input-rounded" id="codigo">
-        <button type="button" class="pure-button" onclick="get()">Pesquisar</button>
+        <button type="button" class="pure-button pure-button-primary" onclick="get()">Pesquisar</button>
+        <button type="button" class="pure-button" onclick="create()">Novo</button>
     </form>
-    <table class="pure-table pure-table-striped">
+    <table id="tabelaMedicos" class="pure-table pure-table-striped">
         <thead>
         <tr>
             <th>Código</th>
