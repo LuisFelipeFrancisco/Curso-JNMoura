@@ -5,21 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/pure.css">
+    <script src="js/index.js"></script>
+    <style>
+        #tabelaPacientes{
+            margin-top: 20px;
+        }
+    </style>
     <title>Pacientes</title>
 </head>
 <body>
     <nav class="pure-menu pure-menu-horizontal">
-        <a href="../index.html" class="pure-menu-heading pure-menu-link">HOME</a>
         <ul class="pure-menu-list">
-            <li class="pure-menu-item">
-                <a href="../medico/index.html" class="pure-menu-link">Medicos</a>
-            </li>
-            <li class="pure-menu-item">
-                <a href="../paciente/index.html" class="pure-menu-link">Pacientes</a>
-            </li>
-            </li>
+            <li class="pure-menu-item"><a href="../index.html" class="pure-menu-heading pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="../medico/index.html" class="pure-menu-link">Médicos</a></li>
+            <li class="pure-menu-item"><a href="../paciente/index.html" class="pure-menu-link">Pacientes</a></li>
         </ul>
     </nav>
-    <h1>Pacientes</h1>
+    <h1>Lista de Pacientes</h1>
+    <form class="pure-form">
+        <label for="codigo">Código:</label>
+        <input type="text" class="pure-input-rounded" id="codigo">
+        <button type="button" class="pure-button pure-button-primary" onclick="get()">Pesquisar</button>
+        <button type="button" class="pure-button" onclick="create()">Novo</button>
+    </form>
+    <table id="tabelaPacientes" class="pure-table pure-table-striped">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th colspan="2">Opções</th>
+        </tr>
+        </thead>
+        <tbody id="dadosTabelaPaciente">
+        </tbody>
+    </table>
 </body>
 </html>
