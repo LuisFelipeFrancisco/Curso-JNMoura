@@ -1,0 +1,9 @@
+<form>
+    <input type="number" [(ngModel)]="altura" name="altura">
+    <input type="number" [(ngModel)]="peso" name="peso">
+    <button (click)="calcularImc()">Calcular</button>
+    <button (click)="limpar()">Limpar</button>
+    <p>SEU IMC: {{imc}}</p>
+    <p>Classificação: {{situacao}}</p>
+    <p>Obesidade (grau): {{grauObesidade}}</p>
+</form>
