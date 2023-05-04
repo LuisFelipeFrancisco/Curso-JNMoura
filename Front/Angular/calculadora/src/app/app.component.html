@@ -6,5 +6,7 @@
     <button (click)="multiplicar()">Multiplicar</button>
     <button (click)="dividir()">Dividir</button>
     <button (click)="limpar()">Limpar</button>
-    <p>Resultado: {{resultado}}</p>
+    <label>Resultado: </label>
+    <label [hidden]="this.divisaoPorZero">{{resultado}}</label>
+    <label [hidden]="!this.divisaoPorZero">Não é possível dividir por zero</label>
 </form>
