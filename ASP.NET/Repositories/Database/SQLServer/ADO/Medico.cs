@@ -7,14 +7,21 @@ namespace Repositories.Database.SQLServer.ADO
     public class Medico: IRepository<Models.Medico>
     {
         private readonly SqlConnection conn; // readonly: o valor de uma variável readonly pode ser atribuído apenas no momento da declaração ou no construtor da classe.
+        private readonly string chaveCache;
         public Medico (String connectionString)
         {
             conn = new SqlConnection (connectionString);
+            chaveCache = "medicos";
         }
 
         public List<Models.Medico> Get ()
         {
-            List<Models.Medico> medicos = new List<Models.Medico>();
+            List<Models.Medico> medicos = (List<Models.Medico>)Cache.Get(chaveCache);
+            if (medicos != null)
+                return medicos;
+
+            medicos = new List<Models.Medico>();
+
             using (conn)
             {
                 conn.Open();
@@ -38,11 +45,18 @@ namespace Repositories.Database.SQLServer.ADO
                     }
                 }
             }
+            Cache.Set(chaveCache, medicos, 1);
+
             return medicos;
         }
         
         public Models.Medico GetById (int id)
         {
+            List<Models.Medico> medicos = (List<Models.Medico>)Cache.Get(chaveCache);
+
+            if (medicos != null)
+                return medicos.Find(medicoCache => medicoCache.Codigo == id);
+
             Models.Medico medico = new Models.Medico();
 
             using (conn)
@@ -92,6 +106,7 @@ namespace Repositories.Database.SQLServer.ADO
                     medico.Codigo = (int)cmd.ExecuteScalar(); // Executa o comando SQL e retorna o primeiro valor da primeira linha da primeira coluna do resultado. Se não houver resultado, retorna null.
                 }
             }
+            Cache.Remove(chaveCache);
         }
 
         public int Update (int id, Models.Medico medico)
@@ -119,6 +134,8 @@ namespace Repositories.Database.SQLServer.ADO
                     linhasAfetadas = cmd.ExecuteNonQuery();
                 }
             }
+            Cache.Remove(chaveCache);
+
             return linhasAfetadas;
         }
 
@@ -140,6 +157,8 @@ namespace Repositories.Database.SQLServer.ADO
                     linhasAfetadas = cmd.ExecuteNonQuery();
                 }
             }
+            Cache.Remove(chaveCache);
+
             return linhasAfetadas;
         }
     }
