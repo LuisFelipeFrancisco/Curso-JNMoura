@@ -16,5 +16,12 @@
         </tr>
     </thead>
     <tbody id="dadosTabelaMedico">
+        <tr *ngFor="let medico of medicos">
+            <td>{{medico.Codigo}}</td>
+            <td>{{medico.Nome}}</td>
+            <td>{{medico.DataNascimento}}</td>
+            <td>{{medico.CRM}}</td>
+            <td></td>
+        </tr>
     </tbody>
 </table>

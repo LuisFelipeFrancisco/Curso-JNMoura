@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { MensagemErro404Component } from './components/mensagem/mensagem-erro404/mensagem-erro404.component';
 import { MedicoModule } from './components/medico/medico.module';
 import { PacienteModule } from './components/paciente/paciente.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,10 @@ import { PacienteModule } from './components/paciente/paciente.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MedicoModule,
+    PacienteModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
