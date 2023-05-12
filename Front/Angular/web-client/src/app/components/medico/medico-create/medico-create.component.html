@@ -1,0 +1,22 @@
+<h1>Novo médico</h1>
+<form class="pure-form pure-form-aligned">
+    <div class="pure-control-group">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" maxlength="200">
+        <span class="pure-form-message-inline">*</span>
+    </div>
+    <div class="pure-control-group">
+        <label for="crm">CRM:</label>
+        <input type="text" id="crm" maxlength="9">
+        <span class="pure-form-message-inline">*</span>
+    </div>
+    <div class="pure-control-group">
+        <label for="dataNascimento">Nascimento:</label>
+        <input type="date" id="dataNascimento">
+    </div>
+    <div class="pure-controls">
+        <button type="button" class="pure-button pure-button-primary" (click)="post()">Incluir</button>
+        <button type="reset" class="pure-button">Limpar</button>
+        <button type="button" class="pure-button" (click)="back()">Voltar</button>
+    </div>
+</form>
