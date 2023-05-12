@@ -2,11 +2,11 @@ export class Medico{
     public Codigo!: number;
     public Nome: string;
     public DataNascimento: string;
-    public CRM: string;
+    public Crm: string;
 
     constructor(){
         this.Nome = "";
         this.DataNascimento = "";
-        this.CRM = "";
+        this.Crm = "";
     }
 }
