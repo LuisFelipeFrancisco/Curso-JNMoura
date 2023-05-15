@@ -93,8 +93,7 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
    */
   
   abbr[title] {
-    border-bottom: none; /* 1 */
-    text-decoration: underline; /* 2 */
+    border-bottom: none; /* 1 */ /* 2 */
     -webkit-text-decoration: underline dotted;
             text-decoration: underline dotted; /* 2 */
   }
@@ -1055,7 +1054,7 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
       }
   
       .pure-form-aligned .pure-controls {
-          margin: 1.5em 0 0 0;
+          margin: 1.5em 0 0;
       }
   
       .pure-form-message-inline,
@@ -1303,7 +1302,7 @@ Copyright (c) Nicolas Gallagher and Jonathan Neal
   
   .pure-table-horizontal td,
   .pure-table-horizontal th {
-      border-width: 0 0 1px 0;
+      border-width: 0 0 1px;
       border-bottom: 1px solid #cbcbcb;
   }
   .pure-table-horizontal tbody > tr:last-child > td {
