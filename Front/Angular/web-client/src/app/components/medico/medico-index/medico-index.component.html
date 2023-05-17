@@ -21,7 +21,8 @@
             <td>{{medico.Nome}}</td>
             <td>{{medico.DataNascimento}}</td>
             <td>{{medico.Crm}}</td>
-            <td></td>
+            <td><a class='pure-menu-link cursor' (click)='editar(medico.Codigo)'>Editar</a>
+                <a class='pure-menu-link cursor' (click)='desejaExcluir(medico.Codigo)'>Excluir</a></td>
         </tr>
     </tbody>
 </table>

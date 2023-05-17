@@ -25,10 +25,38 @@ export class MedicoIndexComponent implements OnInit {
   get():void{
     this.medicoService.getAll()
       .pipe(take(1))
-      .subscribe(medicos => this.medicos = medicos);
+      .subscribe({
+        next: medicos => this.handleResponse(medicos),
+        error: erro => this.handleResponseError(erro.status)
+      });          
+  }
+
+  handleResponse(medicos: Medico[]):void{
+    this.medicos = medicos;
+  }
+
+  handleResponseError(erro:number):void{
+    this.exibirMensagemErro(erro);
+  }
+
+  exibirMensagemErro(erro: number):void{
+    let mensagemCompleta:string = '';
+    if (erro === 404 || erro === 400)
+        mensagemCompleta = "Médico não foi encontrado.";
+    else    
+        mensagemCompleta = 'Ocorreu um erro! Entre em contato com suporte.';
+    alert(mensagemCompleta);
   }
 
   create():void{
     this.router.navigate(['medico-create']);
+  }
+
+  editar(id:number):void{
+    console.log(id);
+  }
+
+  desejaExcluir(id:number):void{
+    console.log(id);
   }
 }

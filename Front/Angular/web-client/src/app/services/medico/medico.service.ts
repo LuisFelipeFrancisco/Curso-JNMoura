@@ -17,4 +17,8 @@ export class MedicoService {
   getAll():Observable<Medico[]>{
     return this.httpClient.get<Medico[]>(this.url);
   }
+
+  post(medico:Medico):Observable<Medico> {
+    return this.httpClient.post<Medico>(this.url, medico);
+  }
 }
