@@ -12,27 +12,50 @@ import { MedicoService } from 'src/app/services/medico/medico.service';
 export class MedicoIndexComponent implements OnInit {
 
   medicos: Medico[];
+  codigoPesquisa: string;
 
   constructor(private router: Router,
     private medicoService: MedicoService) //Injeção de Dependência => router, medicoService
   {
     this.medicos = new Array<Medico>();
+    this.codigoPesquisa = '';
   }
 
   ngOnInit(): void {
   }
 
   get(): void {
+    this.medicos = [] // limpa o array de médicos
+    if (this.codigoPesquisa === '')
+      this.getAll();
+    else
+      this.getById(Number(this.codigoPesquisa)); // Number() => converte string para number
+  }
+
+  getAll(): void {
     this.medicoService.getAll()
       .pipe(take(1))
       .subscribe({
-        next: medicos => this.handleResponse(medicos),
+        next: medicos => this.handleResponseMedicos(medicos),
         error: erro => this.handleResponseError(erro.status)
       });
   }
 
-  handleResponse(medicos: Medico[]): void {
+  getById(id: number): void {
+    this.medicoService.getById(id)
+      .pipe(take(1))
+      .subscribe({
+        next: medico => this.handleResponseMedico(medico),
+        error: erro => this.handleResponseError(erro.status)
+      });
+  }
+
+  handleResponseMedicos(medicos: Medico[]): void {
     this.medicos = medicos;
+  }
+
+  handleResponseMedico(medico: Medico): void {
+    this.medicos.push(medico);
   }
 
   handleResponseError(erro: number): void {
@@ -53,10 +76,21 @@ export class MedicoIndexComponent implements OnInit {
   }
 
   editar(id: number): void {
-    console.log(id);
+    this.router.navigate(['medico-edit', id]);
+  }
+
+  excluir(id: number): void {
+    this.medicoService.delete(id)
+      .pipe(take(1))
+      .subscribe({
+        next: response => this.get(), // response == null
+        error: erro => this.handleResponseError(erro.status)
+      });
   }
 
   desejaExcluir(id: number): void {
-    console.log(id);
+    if (confirm('Deseja excluir o médico?'))
+      this.excluir(id);
   }
+
 }

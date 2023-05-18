@@ -6,11 +6,13 @@ import { MedicoIndexComponent } from './components/medico/medico-index/medico-in
 import { MensagemErro404Component } from './components/mensagem/mensagem-erro404/mensagem-erro404.component';
 import { PacienteCreateComponent } from './components/paciente/paciente-create/paciente-create.component';
 import { PacienteIndexComponent } from './components/paciente/paciente-index/paciente-index.component';
+import { MedicoEditComponent } from './components/medico/medico-edit/medico-edit.component';
 
 const routes: Routes = [
   {path:'', component:HomeComponent},
   {path:'medico-index', component:MedicoIndexComponent},
   {path:'medico-create', component:MedicoCreateComponent},
+  {path:'medico-edit/:id', component:MedicoEditComponent},
   {path:'paciente-index', component:PacienteIndexComponent},
   {path:'paciente-create', component:PacienteCreateComponent},
   {path:'**', component:MensagemErro404Component}

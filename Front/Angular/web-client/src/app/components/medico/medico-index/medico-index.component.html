@@ -1,7 +1,7 @@
 <h1>Lista de médicos</h1>
 <form class="pure-form">
     <label for="codigo">Código:</label>
-    <input type="text" id="codigo">
+    <input type="text" id="codigoPesquisa" [(ngModel)]="codigoPesquisa" name="codigoPesquisa">
     <button type="button" (click)="get()" class="pure-button pure-button-primary">Pesquisar</button>
     <button type="button" (click)="create()" class="pure-button">Novo</button>
 </form>
