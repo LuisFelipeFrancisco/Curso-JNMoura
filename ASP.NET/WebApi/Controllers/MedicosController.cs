@@ -31,7 +31,7 @@ namespace WebApi.Controllers
             try
             {
                 Models.Medico medico = repository.GetById(id);
-                if (medico.Codigo == 0)
+                if (medico == null)
                     return NotFound();
 
                 return Ok(medico);

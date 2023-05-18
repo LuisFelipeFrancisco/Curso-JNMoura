@@ -57,7 +57,7 @@ namespace Repositories.Database.SQLServer.ADO
             if (medicos != null)
                 return medicos.Find(medicoCache => medicoCache.Codigo == id);
 
-            Models.Medico medico = new Models.Medico();
+            Models.Medico medico = null;
 
             using (conn)
             {
@@ -73,6 +73,7 @@ namespace Repositories.Database.SQLServer.ADO
                     {
                         if (dr.Read())
                         {
+                            medico = new Models.Medico();
                             medico.Codigo = (int)dr["codigo"];
                             medico.Nome = dr["nome"].ToString();
                             medico.Crm = dr["crm"].ToString();

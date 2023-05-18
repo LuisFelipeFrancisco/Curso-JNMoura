@@ -44,7 +44,7 @@ namespace Repositories.Database.SQLServer.ADO
 
         public Models.Paciente GetById (int id)
         {
-            Models.Paciente paciente = new Models.Paciente();
+            Models.Paciente paciente = null;
 
             using (conn)
             {
@@ -60,6 +60,7 @@ namespace Repositories.Database.SQLServer.ADO
                     {
                         if (dr.Read())
                         {
+                            paciente = new Models.Paciente();
                             paciente.Codigo = (int)dr["codigo"];
                             paciente.Nome = (string)dr["nome"];
                             paciente.Email = (string)dr["email"];
