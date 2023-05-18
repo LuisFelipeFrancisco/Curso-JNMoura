@@ -13,9 +13,9 @@ export class MedicoCreateComponent implements OnInit {
 
   medico: Medico;
 
-  constructor(private router:Router, 
-              private medicoService: MedicoService) { 
-      this.medico = new Medico();
+  constructor(private router: Router,
+    private medicoService: MedicoService) {
+    this.medico = new Medico();
   }
 
   ngOnInit(): void {
@@ -25,35 +25,35 @@ export class MedicoCreateComponent implements OnInit {
     this.medicoService.post(this.medico)
       .pipe(take(1))
       .subscribe({
-          next: medico => this.handleResponse(medico),
-          error: erro => this.handleResponseError(erro.status)
-       });    
+        next: medico => this.handleResponse(medico),
+        error: erro => this.handleResponseError(erro.status)
+      });
   }
 
-  handleResponse(medico: Medico):void{
+  handleResponse(medico: Medico): void {
     this.medico = medico;
     this.exibirMensagemSucesso();
     this.goToIndex();
   }
 
-  exibirMensagemSucesso():void{
+  exibirMensagemSucesso(): void {
     alert('Médico cadastrado com sucesso');
   }
 
-  handleResponseError(erro: number):void{
+  handleResponseError(erro: number): void {
     this.exibirMensagemErro(erro);
   }
 
-  exibirMensagemErro(erro: number){
-    let mensagemCompleta:string = '';
+  exibirMensagemErro(erro: number) {
+    let mensagemCompleta: string = '';
     if (erro === 404 || erro === 400)
-        mensagemCompleta = "Preencha os campos obrigatórios.";
-    else    
-        mensagemCompleta = 'Ocorreu um erro! Entre em contato com suporte.';
+      mensagemCompleta = "Preencha os campos obrigatórios.";
+    else
+      mensagemCompleta = 'Ocorreu um erro! Entre em contato com suporte.';
     alert(mensagemCompleta);
   }
 
-  back(): void{
+  back(): void {
     this.goToIndex();
   }
 

@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 })
 export class PacienteIndexComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  create():void{
+  create(): void {
     this.router.navigate(['paciente-create']);
   }
 
