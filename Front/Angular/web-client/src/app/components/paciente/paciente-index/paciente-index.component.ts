@@ -14,7 +14,7 @@ export class PacienteIndexComponent implements OnInit {
   }
 
   create(): void {
-    this.router.navigate(['paciente-create']);
+    this.router.navigate(['paciente/paciente-create']);
   }
 
 }

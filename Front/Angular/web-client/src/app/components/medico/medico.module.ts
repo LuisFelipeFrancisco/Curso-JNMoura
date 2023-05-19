@@ -4,6 +4,7 @@ import { MedicoIndexComponent } from './medico-index/medico-index.component';
 import { MedicoCreateComponent } from './medico-create/medico-create.component';
 import { FormsModule } from '@angular/forms';
 import { MedicoEditComponent } from './medico-edit/medico-edit.component';
+import { MedicoRoutingModule } from './medico-routing.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { MedicoEditComponent } from './medico-edit/medico-edit.component';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MedicoRoutingModule
   ]
 })
 export class MedicoModule { }

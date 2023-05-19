@@ -14,6 +14,6 @@ export class PacienteCreateComponent implements OnInit {
   }
 
   back(): void {
-    this.router.navigate(['paciente-index']);
+    this.router.navigate(['paciente/paciente-index']);
   }
 }

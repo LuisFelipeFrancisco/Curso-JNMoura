@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PacienteIndexComponent } from './paciente-index/paciente-index.component';
 import { PacienteCreateComponent } from './paciente-create/paciente-create.component';
+import { PacienteRoutingModule } from './paciente-routing.module';
 
 
 
@@ -11,7 +12,8 @@ import { PacienteCreateComponent } from './paciente-create/paciente-create.compo
     PacienteCreateComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PacienteRoutingModule
   ]
 })
 export class PacienteModule { }

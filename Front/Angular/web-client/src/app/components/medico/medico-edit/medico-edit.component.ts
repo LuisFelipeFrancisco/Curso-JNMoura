@@ -58,7 +58,7 @@ export class MedicoEditComponent {
   }
 
   back(): void {
-    this.router.navigate(['/medico-index']);
+    this.router.navigate(['medico/medico-index']);
   }
 
   desejaAlterar(id: number) {

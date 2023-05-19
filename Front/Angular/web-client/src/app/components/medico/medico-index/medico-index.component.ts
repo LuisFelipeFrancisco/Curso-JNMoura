@@ -72,11 +72,11 @@ export class MedicoIndexComponent implements OnInit {
   }
 
   create(): void {
-    this.router.navigate(['medico-create']);
+    this.router.navigate(['medico/medico-create']);
   }
 
   editar(id: number): void {
-    this.router.navigate(['medico-edit', id]);
+    this.router.navigate(['medico/medico-edit', id]);
   }
 
   excluir(id: number): void {

@@ -58,7 +58,7 @@ export class MedicoCreateComponent implements OnInit {
   }
 
   goToIndex(): void {
-    this.router.navigate(['medico-index']);
+    this.router.navigate(['medico/medico-index']);
   }
 
 }
